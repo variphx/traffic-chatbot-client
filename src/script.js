@@ -68,14 +68,17 @@ const generateAPIResponse = async (incomingMessageDiv) => {
     max_generation_try: 2,
   });
 
-  const fetchUrl = new URL("./chat", API_URL_BASE);
-  fetchUrl.search = "?" + params.toString();
+  const fetchUrl = new URL("./chat/self_rag", API_URL_BASE);
 
   try {
     const response = await fetch(fetchUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({}),
+      body: JSON.stringify({
+        question: userMessage,
+        max_generation_try: 2,
+        max_retrieve_try: 2,
+      }),
     });
 
     const data = await response.json();
